@@ -1,6 +1,5 @@
 ﻿using IIASA.FotoQuestApi.Model;
 using IIASA.FotoQuestApi.Web.Models;
-using System;
 using System.Drawing;
 using System.Threading.Tasks;
 

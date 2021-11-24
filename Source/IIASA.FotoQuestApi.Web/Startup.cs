@@ -31,7 +31,7 @@ namespace IIASA.FotoQuestApi.Web
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "TestApi - WebApi",
+                    Title = "FotoQuest - WebApi",
                 });
             });
             services.AddHttpContextAccessor();

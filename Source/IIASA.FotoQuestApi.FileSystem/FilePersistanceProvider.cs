@@ -57,8 +57,8 @@ namespace IIASA.FotoQuestApi.FileSystem
             {
                 var memoryStream = new MemoryStream();
                 await fileUpload.UploadedFile.CopyToAsync(memoryStream);
-                Image i = imageHandler.EnhanceImage(Image.FromStream(memoryStream));
-                i.Save(stream, ImageFormat.Png);
+                Image enhancedImage = imageHandler.EnhanceImage(Image.FromStream(memoryStream));
+                enhancedImage.Save(stream, ImageFormat.Png);
                 memoryStream.Flush();
                 stream.Flush();
             }

@@ -44,8 +44,8 @@ namespace IIASA.FotoQuestApi.Web.DependencyInjection
             => services.AddSingleton<IDatabaseProvider, DatabaseProvider>()
                         .AddSingleton<IDbPersistanceProvider, DbPersistanceProvider>()
                         .AddSingleton<IFilePersistanceProvider>(provider => ActivatorUtilities.CreateInstance<FilePersistanceProvider>(provider,
-                                                                                                                                webHostEnvironment.WebRootPath,
-                                                                                                                                provider.GetService<FilePersistanceConfigration>(),
-                                                                                                                                provider.GetService<IImageHandler>()));
+                                                                                                                                        webHostEnvironment.WebRootPath,
+                                                                                                                                        provider.GetService<FilePersistanceConfigration>(),
+                                                                                                                                        provider.GetService<IImageHandler>()));
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace IIASA.FotoQuestApi.Configuration
+﻿using System.Collections.Generic;
+
+namespace IIASA.FotoQuestApi.Configuration
 {
     public class ImageConfigration
     {
@@ -8,6 +10,8 @@
         public int Large { get; set; }
         public int MinAllowedSize { get; set; }
         public int MaxAllowedSize { get; set; }
+        //public IEnumerable<string> ValidImageExtensions { get; set; }
+        public List<string> ValidImageExtensions { get; set; }
         public float Brightness { get; set; }
         public float Contrast { get; set; }
     }

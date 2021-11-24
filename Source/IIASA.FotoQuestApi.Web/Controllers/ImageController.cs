@@ -1,6 +1,5 @@
 ﻿using IIASA.FotoQuestApi.Configuration;
 using IIASA.FotoQuestApi.Model;
-//using IIASA.FotoQuestApi.Model.DataContract;
 using IIASA.FotoQuestApi.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +30,7 @@ namespace IIASA.FotoQuestApi.Web.Controllers
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(FilePersistanceFailedResponse), StatusCodes.Status500InternalServerError)]
         public async Task<FilePersistanceSuccessResponse> UploadFile([FromForm] FileUpload fileUpload)
-            => await imageCoordinator.ProcessImage(fileUpload);
+            => await imageCoordinator.PersistImage(fileUpload);
 
         [HttpGet("Thumbnail/{fileId}")]
         [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK)]
@@ -66,7 +65,7 @@ namespace IIASA.FotoQuestApi.Web.Controllers
         private async Task<IActionResult> Response(int size, string fileId)
         {
             return File(await imageCoordinator.GetImage(fileId, size), "image/png");
-        
+
         }
     }
 }
