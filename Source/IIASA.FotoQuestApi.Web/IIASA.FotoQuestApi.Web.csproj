@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\FileUpload.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.2.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="System.Windows.Extensions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IIASA.FotoQuestApi.Configuration\IIASA.FotoQuestApi.Configuration.csproj" />
+    <ProjectReference Include="..\IIASA.FotoQuestApi.Database\IIASA.FotoQuestApi.Database.csproj" />
+    <ProjectReference Include="..\IIASA.FotoQuestApi.FileSystem\IIASA.FotoQuestApi.FileSystem.csproj" />
+    <ProjectReference Include="..\IIASA.FotoQuestApi.Image\IIASA.FotoQuestApi.ImageProcess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+
+</Project>
