@@ -32,10 +32,8 @@ namespace IIASA.FotoQuestApi.FileSystem
 
             if (File.Exists(filePath))
             {
-                Image i = imageHandler.GetResizedImage(filePath, size);
-
-                return (byte[])(new ImageConverter()).ConvertTo(i, typeof(byte[]));
-                //return await File.ReadAllBytesAsync(filePath);
+                Image resizedImage = imageHandler.GetResizedImage(filePath, size);
+                return (byte[])(new ImageConverter()).ConvertTo(resizedImage, typeof(byte[]));
             }
             else
             {
@@ -46,7 +44,7 @@ namespace IIASA.FotoQuestApi.FileSystem
         public async Task<FileData> SaveFile(FileUpload fileUpload)
         {
             string id = System.Guid.NewGuid().ToString();
-            string newFileName = $"{id}" + GetExtension();
+            string newFileName = $"{id}" + Path.GetExtension(fileUpload.UploadedFile.FileName);
             string path = webRootPath + $"\\{filePersistanceConfigration.FolderName}\\";
             string filePath = path + newFileName;
 
@@ -72,14 +70,7 @@ namespace IIASA.FotoQuestApi.FileSystem
             fileMetaData.FilePath = filePath;
             fileMetaData.FileName = newFileName;
             return fileMetaData;
-
-
-            string GetExtension()
-            {
-                var fname = fileUpload.UploadedFile.FileName;
-                return fileUpload.UploadedFile.FileName[fname.LastIndexOf('.')..];
-            }
-
+           
         }
 
         private FileData GetFileMetaData(string filePath)

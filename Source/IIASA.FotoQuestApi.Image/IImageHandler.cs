@@ -13,18 +13,18 @@ namespace IIASA.FotoQuestApi.ImageProcess
     {
         public Image GetResizedImage(string filePath, Size size)
         {
-            Image image = Image.FromFile(filePath);
-            return ResizeImage(image, size);
+            var originalImage = new BaseImage(Image.FromFile(filePath));
+            var resizeImage = new ResizeImage(originalImage, size);
+            return resizeImage.GetImage();
         }
 
         public Image EnhanceImage(Image image)
         {
             var baseImage = new BaseImage(image);
-            var contrastImage = new ContrastImage(baseImage);
-            var brightenImage = new BrightenImage(contrastImage);
+            var contrastImage = new ContrastImage(baseImage, 1.5f);
+            var brightenImage = new BrightenImage(contrastImage,1.5f);
             return brightenImage.GetImage();
         }
 
-        private Image ResizeImage(Image imgToResize, Size size) => new Bitmap(imgToResize, size);
     }
 }

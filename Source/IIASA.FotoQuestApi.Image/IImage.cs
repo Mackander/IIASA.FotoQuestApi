@@ -50,20 +50,29 @@ namespace IIASA.FotoQuestApi.ImageProcess
         }
     }
 
-    //public class ResizeImage : ImageDecorator
-    //{
-    //    public ResizeImage(IImage image) : base(image) { }
+    public class ResizeImage : ImageDecorator
+    {
+        private readonly Size size;
 
-    //    public override Image GetImage()
-    //    {
-    //        return ResizeImage(base.GetImage());
-    //    }
-    //    private Image ResizeImage(Image imgToResize, Size size) => new Bitmap(imgToResize, size);
-    //}
+        public ResizeImage(IImage image, Size size) : base(image)
+        {
+            this.size = size;
+        }
+
+        public override Image GetImage()
+        {
+            return new Bitmap(base.GetImage(), size);
+        }
+    }
 
     public class ContrastImage : ImageDecorator
     {
-        public ContrastImage(IImage image) : base(image) { }
+        private readonly float contrastValue;
+
+        public ContrastImage(IImage image, float contrastValue = 1.0f) : base(image)
+        {
+            this.contrastValue = contrastValue;
+        }
 
         public override Image GetImage()
         {
@@ -78,7 +87,7 @@ namespace IIASA.FotoQuestApi.ImageProcess
             Bitmap adjustedImage = new Bitmap(image);
 
             float brightness = 1.0f; // no change in brightness
-            float contrast = 1.5f; // twice the contrast
+            float contrast = contrastValue; // twice the contrast
             float gamma = 1.0f; // no change in gamma
 
             float adjustedBrightness = brightness - 1.0f;
@@ -102,7 +111,7 @@ namespace IIASA.FotoQuestApi.ImageProcess
 
     public class BrightenImage : ImageDecorator
     {
-        public BrightenImage(IImage image) : base(image) { }
+        public BrightenImage(IImage image, float brightnessValue = 1.0f) : base(image) { }
 
         public override Image GetImage()
         {
@@ -116,7 +125,7 @@ namespace IIASA.FotoQuestApi.ImageProcess
             Bitmap originalImage = new Bitmap(image);
             Bitmap adjustedImage = new Bitmap(image);
 
-            float brightness = 1.5f; // no change in brightness
+            float brightness = 1.0f; // no change in brightness
             float contrast = 1.0f; // twice the contrast
             float gamma = 1.0f; // no change in gamma
 
