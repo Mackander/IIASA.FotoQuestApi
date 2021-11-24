@@ -8,5 +8,7 @@
         public int Large { get; set; }
         public int MinAllowedSize { get; set; }
         public int MaxAllowedSize { get; set; }
+        public float Brightness { get; set; }
+        public float Contrast { get; set; }
     }
 }
