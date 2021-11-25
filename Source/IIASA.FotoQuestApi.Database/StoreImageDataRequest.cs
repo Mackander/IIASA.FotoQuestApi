@@ -17,4 +17,11 @@ namespace IIASA.FotoQuestApi.Database
         public string Command => "uspStoreImageData";
         public CommandType CommandType => CommandType.StoredProcedure;
     }
+
+    public class GetImageDataRequest : IDataRequest
+    {
+        public string Id { get; set; }
+        public string Command => "uspFetchImageData";
+        public CommandType CommandType => CommandType.StoredProcedure;
+    }
 }

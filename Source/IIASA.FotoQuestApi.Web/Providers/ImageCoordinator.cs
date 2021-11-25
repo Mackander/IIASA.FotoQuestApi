@@ -13,15 +13,15 @@ namespace IIASA.FotoQuestApi.Web
 {
     public class ImageCoordinator : IImageCoordinator
     {
-        private readonly IDbPersistanceProvider DbPersistanceProvider;
+        private readonly IDbPersistanceProvider dbPersistanceProvider;
         private readonly IFilePersistanceProvider filePersistanceProvider;
         private readonly ImageConfigration imageConfigration;
 
-        public ImageCoordinator(IDbPersistanceProvider persistanceProvider,
+        public ImageCoordinator(IDbPersistanceProvider dbPersistanceProvider,
                                 IFilePersistanceProvider filePersistanceProvider,
                                 ImageConfigration imageConfigration)
         {
-            this.DbPersistanceProvider = persistanceProvider;
+            this.dbPersistanceProvider = dbPersistanceProvider;
             this.filePersistanceProvider = filePersistanceProvider;
             this.imageConfigration = imageConfigration;
         }
@@ -29,7 +29,11 @@ namespace IIASA.FotoQuestApi.Web
         public async Task<byte[]> GetImage(string fileId, int imageSize)
         {
             Validate(fileId, imageSize);
-            return await filePersistanceProvider.GetFileAsync(fileId.Trim(), new System.Drawing.Size(imageSize, imageSize));
+
+            var fileIdTrim = fileId.Trim();
+            var fileData = dbPersistanceProvider.LoadImageData(fileIdTrim);
+            fileData.Id = fileIdTrim;
+            return await filePersistanceProvider.GetFileAsync(fileData, new System.Drawing.Size(imageSize, imageSize));
         }
 
         private void Validate(string fileId, int imageSize)
@@ -49,7 +53,7 @@ namespace IIASA.FotoQuestApi.Web
             ValidateFile(fileUpload);
 
             var fileData = await filePersistanceProvider.SaveFile(fileUpload);
-            DbPersistanceProvider.SaveImageData(fileData);
+            dbPersistanceProvider.SaveImageData(fileData);
             return new FilePersistanceSuccessResponse
             {
                 Id = fileData.Id

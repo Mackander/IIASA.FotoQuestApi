@@ -8,6 +8,6 @@ namespace IIASA.FotoQuestApi.FileSystem
     public interface IFilePersistanceProvider
     {
         public Task<FileData> SaveFile(FileUpload fileUpload);
-        public Task<byte[]> GetFileAsync(string fileId, Size size);
+        public Task<byte[]> GetFileAsync(FileData fileData, Size size);
     }
 }

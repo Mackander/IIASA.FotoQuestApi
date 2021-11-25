@@ -25,11 +25,11 @@ namespace IIASA.FotoQuestApi.FileSystem
             this.imageHandler = imageHandler;
         }
 
-        public async Task<byte[]> GetFileAsync(string fileId, Size size)
+        public async Task<byte[]> GetFileAsync(FileData fileData, Size size)
         {
-            string path = webRootPath + $"\\{filePersistanceConfigration.FolderName}\\";
-            string filePath = path + fileId + ".png";
-
+            //string path = webRootPath + $"\\{filePersistanceConfigration.FolderName}\\";
+            //string filePath = path + fileId + ".png";
+            string filePath = fileData.FilePath;
             if (File.Exists(filePath))
             {
                 Image resizedImage = imageHandler.GetResizedImage(filePath, size);
@@ -37,7 +37,7 @@ namespace IIASA.FotoQuestApi.FileSystem
             }
             else
             {
-                throw new NotFoundException($"Image not found for provided Id {fileId}");
+                throw new NotFoundException($"Image not found for provided Id : {fileData.Id}");
             }
         }
 
@@ -70,7 +70,7 @@ namespace IIASA.FotoQuestApi.FileSystem
             fileMetaData.FilePath = filePath;
             fileMetaData.FileName = newFileName;
             return fileMetaData;
-           
+
         }
 
         private FileData GetFileMetaData(string filePath)

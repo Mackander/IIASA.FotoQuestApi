@@ -5,7 +5,7 @@ namespace IIASA.FotoQuestApi.Database
 {
     public interface IDbPersistanceProvider
     {
-        public void LoadImageData();
+        public FileData LoadImageData(string fileId);
         public void SaveImageData(FileData data);
 
     }
@@ -18,9 +18,9 @@ namespace IIASA.FotoQuestApi.Database
         {
             this.databaseProvider = databaseProvider;
         }
-        public void LoadImageData()
+        public FileData LoadImageData(string fileId)
         {
-            throw new NotImplementedException();
+            return databaseProvider.LoadImageData(new GetImageDataRequest { Id = fileId });
         }
 
         public void SaveImageData(FileData data)
