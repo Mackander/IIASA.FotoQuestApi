@@ -28,15 +28,15 @@ namespace IIASA.FotoQuestApi.Web
 
         public async Task<byte[]> GetImage(string fileId, int imageSize)
         {
-            Validate(fileId, imageSize);
+            ValidateFileRequest(fileId, imageSize);
 
             var fileIdTrim = fileId.Trim();
-            var fileData = dbPersistanceProvider.LoadImageData(fileIdTrim);
+            var fileData = await dbPersistanceProvider.LoadImageData(fileIdTrim);
             fileData.Id = fileIdTrim;
             return await filePersistanceProvider.GetFileAsync(fileData, new System.Drawing.Size(imageSize, imageSize));
         }
 
-        private void Validate(string fileId, int imageSize)
+        private void ValidateFileRequest(string fileId, int imageSize)
         {
             if (string.IsNullOrEmpty(fileId?.Trim()))
             {
@@ -50,7 +50,7 @@ namespace IIASA.FotoQuestApi.Web
 
         public async Task<FilePersistanceSuccessResponse> PersistImage(FileUpload fileUpload)
         {
-            ValidateFile(fileUpload);
+            ValidateFilePersistRequest(fileUpload);
 
             var fileData = await filePersistanceProvider.SaveFile(fileUpload);
             dbPersistanceProvider.SaveImageData(fileData);
@@ -60,7 +60,7 @@ namespace IIASA.FotoQuestApi.Web
             };
             
         }
-        private void ValidateFile(FileUpload fileUpload)
+        private void ValidateFilePersistRequest(FileUpload fileUpload)
         {
             if (fileUpload.UploadedFile == null)
             {

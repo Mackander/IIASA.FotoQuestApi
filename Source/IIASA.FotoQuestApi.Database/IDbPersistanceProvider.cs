@@ -1,11 +1,12 @@
 ﻿using IIASA.FotoQuestApi.Model;
 using System;
+using System.Threading.Tasks;
 
 namespace IIASA.FotoQuestApi.Database
 {
     public interface IDbPersistanceProvider
     {
-        public FileData LoadImageData(string fileId);
+        public Task<FileData> LoadImageData(string fileId);
         public void SaveImageData(FileData data);
 
     }
@@ -18,9 +19,9 @@ namespace IIASA.FotoQuestApi.Database
         {
             this.databaseProvider = databaseProvider;
         }
-        public FileData LoadImageData(string fileId)
+        public async Task<FileData> LoadImageData(string fileId)
         {
-            return databaseProvider.LoadImageData(new GetImageDataRequest { Id = fileId });
+            return await databaseProvider.LoadImageData(new GetImageDataRequest { Id = fileId });
         }
 
         public void SaveImageData(FileData data)

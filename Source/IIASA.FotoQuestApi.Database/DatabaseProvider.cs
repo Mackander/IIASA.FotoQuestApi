@@ -3,9 +3,7 @@ using IIASA.FotoQuestApi.Model;
 using IIASA.FotoQuestApi.Model.Exceptions;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.Data;
+using System.Threading.Tasks;
 
 namespace IIASA.FotoQuestApi.Database
 {
@@ -27,33 +25,15 @@ namespace IIASA.FotoQuestApi.Database
             this.connectionString = configuration.GetConnectionString("DbConnectionString");
         }
 
-        public FileData LoadImageData(IDataRequest dataRequest)
+        public async Task<FileData> LoadImageData(IDataRequest dataRequest)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
-                //using (MySqlCommand cmd = new MySqlCommand(dataRequest.Command, connection))
-                //{
-                //    cmd.CommandType = dataRequest.CommandType;
-                //    if (dataRequest is GetImageDataRequest imageData)
-                //    {
-                //        cmd.Parameters.AddWithValue("arg_Id", imageData.Id);
-
-                //    }
-                //    cmd.ExecuteNonQuery();
-                //    using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
-                //    {
-                //        DataTable dt = new DataTable();
-                //        sda.Fill(dt); 
-                //        //GridView1.DataSource = dt;
-                //        //GridView1.DataBind();
-                //    }
-                //}
-
                 var fileId = (dataRequest as GetImageDataRequest).Id;
                 var procedure = dataRequest.Command;
                 var values = new { arg_Id = fileId };
-                var fileData = connection.QuerySingle<FileData>(procedure, values, commandType: dataRequest.CommandType);
+                var fileData = await connection.QuerySingleAsync<FileData>(procedure, values, commandType: dataRequest.CommandType);
                 connection.Close();
 
                 if (fileData == null)
