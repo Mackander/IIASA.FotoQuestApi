@@ -10,18 +10,9 @@ namespace IIASA.FotoQuestApi.Database
     public class DatabaseProvider : IDatabaseProvider
     {
         private readonly string connectionString;
-        private readonly IConfiguration configuration;
 
         public DatabaseProvider(IConfiguration configuration)
         {
-            //var host = configuration["DBHOST"] ?? "localhost";
-            //var port = configuration["DBPORT"] ?? "3306";
-            //var userid = configuration["MYSQL_USER"] ?? "testuser";
-            //var password = "pass@word1234";
-            //var db = configuration["MYSQL_DATABASE"] ?? "fotoquest_db";
-
-            //connectionString = $"server={host}; userid={userid};pwd={password};port={port};database={db}";
-            //this.configuration = configuration;
             this.connectionString = configuration.GetConnectionString("DbConnectionString");
         }
 
@@ -67,13 +58,6 @@ namespace IIASA.FotoQuestApi.Database
 
                     }
                     cmd.ExecuteNonQuery();
-                    //using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
-                    //{
-                    //    DataTable dt = new DataTable();
-                    //    sda.Fill(dt);uspStoreImageData
-                    //    GridView1.DataSource = dt;
-                    //    GridView1.DataBind();
-                    //}
                 }
                 connection.Close();
             }
