@@ -59,7 +59,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `uspFetchImageData`(
 IN arg_Id CHAR(36)
 )
 BEGIN
-	Select OriginalName, DateOfUpload, HorizontalResolution, VerticalResolution, Height, Width, FilePath, FileName from imageData Where Id = arg_Id  limit 1;
+	Select OriginalName, DateOfUpload, HorizontalResolution, VerticalResolution, Height, Width, FilePath, FileName from imagedata Where Id = arg_Id  limit 1;
 END$$
 
 DELIMITER ;

@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using SixLabors.ImageSharp;
 
 namespace IIASA.FotoQuestApi.ImageProcess
 {
@@ -7,9 +7,8 @@ namespace IIASA.FotoQuestApi.ImageProcess
         private readonly IImage image;
 
         public ImageDecorator(IImage image)
-        {
-            this.image = image;
-        }
+            => this.image = image;
+
 
         public virtual Image GetImage()
         {

@@ -1,5 +1,5 @@
 ﻿using IIASA.FotoQuestApi.Configuration;
-using System.Drawing;
+using SixLabors.ImageSharp;
 
 namespace IIASA.FotoQuestApi.ImageProcess
 {
@@ -12,9 +12,9 @@ namespace IIASA.FotoQuestApi.ImageProcess
             this.imageConfigration = imageConfigration;
         }
 
-        public Image GetResizedImage(string filePath, Size size)
+        public Image GetResizedImage(Image image, Size size)
         {
-            var originalImage = new BaseImage(Image.FromFile(filePath));
+            var originalImage = new BaseImage(image);
             var resizeImage = new ResizeImage(originalImage, size);
             return resizeImage.GetImage();
         }

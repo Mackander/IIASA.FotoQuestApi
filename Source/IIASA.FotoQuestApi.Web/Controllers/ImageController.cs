@@ -62,7 +62,7 @@ namespace IIASA.FotoQuestApi.Web.Controllers
             return await Response(customSize, fileId);
         }
 
-        private async Task<IActionResult> Response(int size, string fileId)
+        private new async Task<IActionResult> Response(int size, string fileId)
         {
             return File(await imageCoordinator.GetImage(fileId, size), "image/png");
 

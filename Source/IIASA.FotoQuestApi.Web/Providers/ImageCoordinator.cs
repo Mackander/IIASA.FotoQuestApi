@@ -4,6 +4,7 @@ using IIASA.FotoQuestApi.FileSystem;
 using IIASA.FotoQuestApi.Model;
 using IIASA.FotoQuestApi.Model.Exceptions;
 using IIASA.FotoQuestApi.Web.Models;
+using SixLabors.ImageSharp;
 using System;
 using System.IO;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace IIASA.FotoQuestApi.Web
             var fileIdTrim = fileId.Trim();
             var fileData = await dbPersistanceProvider.LoadImageData(fileIdTrim);
             fileData.Id = fileIdTrim;
-            return await filePersistanceProvider.GetFileAsync(fileData, new System.Drawing.Size(imageSize, imageSize));
+            return await filePersistanceProvider.GetFileAsync(fileData, new Size(imageSize, imageSize));
         }
 
         private void ValidateFileRequest(string fileId, int imageSize)

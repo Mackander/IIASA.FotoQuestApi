@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using SixLabors.ImageSharp;
 
 namespace IIASA.FotoQuestApi.ImageProcess
 {
@@ -7,13 +7,11 @@ namespace IIASA.FotoQuestApi.ImageProcess
         private readonly Image image;
 
         public BaseImage(Image image)
-        {
-            this.image = image;
-        }
+            => this.image = image;
+
 
         public Image GetImage()
-        {
-            return this.image;
-        }
+            => this.image;
+
     }
 }

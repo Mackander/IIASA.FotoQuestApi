@@ -1,10 +1,10 @@
-﻿using System.Drawing;
+﻿using SixLabors.ImageSharp;
 
 namespace IIASA.FotoQuestApi.ImageProcess
 {
     public interface IImageHandler
     {
-        public Image GetResizedImage(string filePath, Size size);
+        public Image GetResizedImage(Image image, Size size);
 
         public Image EnhanceImage(Image img);
     }

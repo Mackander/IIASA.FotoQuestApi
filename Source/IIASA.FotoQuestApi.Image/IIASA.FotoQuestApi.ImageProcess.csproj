@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="PhotoSauce.MagicScaler" Version="0.12.2" />
-    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

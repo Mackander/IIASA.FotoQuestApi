@@ -1,6 +1,6 @@
 ﻿using IIASA.FotoQuestApi.Model;
 using IIASA.FotoQuestApi.Web.Models;
-using System.Drawing;
+using SixLabors.ImageSharp;
 using System.Threading.Tasks;
 
 namespace IIASA.FotoQuestApi.FileSystem

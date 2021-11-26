@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace IIASA.FotoQuestApi.ImageProcess
 {
@@ -7,13 +8,13 @@ namespace IIASA.FotoQuestApi.ImageProcess
         private readonly Size size;
 
         public ResizeImage(IImage image, Size size) : base(image)
-        {
-            this.size = size;
-        }
+            => this.size = size;
 
         public override Image GetImage()
         {
-            return new Bitmap(base.GetImage(), size);
+            Image image = base.GetImage();
+            image.Mutate(x => x.Resize(size.Width, size.Height));
+            return image;
         }
     }
 }
