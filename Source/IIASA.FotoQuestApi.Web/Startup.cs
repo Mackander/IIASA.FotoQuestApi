@@ -1,4 +1,5 @@
 using IIASA.FotoQuestApi.Web.DependencyInjection;
+using IIASA.FotoQuestApi.Web.Diagnostics;
 using IIASA.FotoQuestApi.Web.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,9 @@ namespace IIASA.FotoQuestApi.Web
             services.AddHttpContextAccessor();
 
             services.AddDependencies(Configuration, webHostEnvironment);
+
+            services.AddHealthChecks()
+                    .AddDatabaseHealthOptions<DbHealthCheckConfigureOptions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +62,7 @@ namespace IIASA.FotoQuestApi.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("health", new XmlHealthCheckOptions());
             });
         }
     }

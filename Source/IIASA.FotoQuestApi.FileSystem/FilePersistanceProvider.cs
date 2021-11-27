@@ -16,11 +16,11 @@ namespace IIASA.FotoQuestApi.FileSystem
         private readonly FilePersistanceConfigration filePersistanceConfigration;
         private readonly IImageHandler imageHandler;
 
-        public FilePersistanceProvider(string webHostEnvironment,
+        public FilePersistanceProvider(string webRootPath,
                 FilePersistanceConfigration filePersistanceConfigration,
                 IImageHandler imageHandler)
         {
-            this.webRootPath = webHostEnvironment;
+            this.webRootPath = webRootPath;
             this.filePersistanceConfigration = filePersistanceConfigration;
             this.imageHandler = imageHandler;
         }
@@ -28,9 +28,9 @@ namespace IIASA.FotoQuestApi.FileSystem
         public async Task<byte[]> GetFileAsync(FileData fileData, Size size)
         {
             string filePath = fileData.FilePath;
-            string fileExtension = Path.GetExtension(fileData.FileName)[1..].ToLower();
             if (File.Exists(filePath))
             {
+                string fileExtension = Path.GetExtension(fileData.FileName)[1..].ToLower();
                 using (var inputStream = File.OpenRead(filePath))
                 {
                     using (var image = await Image.LoadAsync(inputStream, GetImageDecoder(fileExtension)))

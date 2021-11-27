@@ -16,11 +16,29 @@ namespace IIASA.FotoQuestApi.Database
             this.connectionString = configuration.GetConnectionString("DbConnectionString");
         }
 
+        public async Task<bool> CheckConnection()
+        {
+            try
+            {
+                using (var connection = new MySqlConnection(connectionString))
+                {
+                    await connection.OpenAsync();
+                    await connection.CloseAsync();
+                    return true;
+                }
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+        }
+
         public async Task<FileData> LoadImageData(IDataRequest dataRequest)
         {
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
+                
                 var fileId = (dataRequest as GetImageDataRequest).Id;
                 var procedure = dataRequest.Command;
                 var values = new { arg_Id = fileId };
@@ -36,8 +54,10 @@ namespace IIASA.FotoQuestApi.Database
             }
         }
 
-        public void SaveImageData(IDataRequest data)
+        public async Task<int> SaveImageData(IDataRequest data)
         {
+            int result = 0;
+
             using (var connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
@@ -57,11 +77,11 @@ namespace IIASA.FotoQuestApi.Database
                         cmd.Parameters.AddWithValue("FileName", imageData.FileName);
 
                     }
-                    cmd.ExecuteNonQuery();
+                    result = await cmd.ExecuteNonQueryAsync();
                 }
                 connection.Close();
             }
-
+            return result;
         }
     }
 }

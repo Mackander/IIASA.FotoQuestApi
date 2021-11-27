@@ -7,8 +7,7 @@ namespace IIASA.FotoQuestApi.Database
     public interface IDbPersistanceProvider
     {
         public Task<FileData> LoadImageData(string fileId);
-        public void SaveImageData(FileData data);
-
+        public Task<int> SaveImageData(FileData data);
     }
 
     public class DbPersistanceProvider : IDbPersistanceProvider
@@ -24,9 +23,9 @@ namespace IIASA.FotoQuestApi.Database
             return await databaseProvider.LoadImageData(new GetImageDataRequest { Id = fileId });
         }
 
-        public void SaveImageData(FileData data)
+        public async Task<int> SaveImageData(FileData data)
         {
-            databaseProvider.SaveImageData(new StoreImageDataRequest
+            var response = await databaseProvider.SaveImageData(new StoreImageDataRequest
             {
                 Id = data.Id,
                 OriginalName = data.OriginalName,
@@ -38,7 +37,11 @@ namespace IIASA.FotoQuestApi.Database
                 FilePath = data.FilePath,
                 FileName = data.FileName,
             });
-
+            if (response <= 0)
+            {
+                throw new Exception($"Not able to save Data in Database with id {data.Id}");
+            }
+            return response;
         }
     }
 }
