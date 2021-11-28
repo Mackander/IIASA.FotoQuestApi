@@ -47,7 +47,7 @@ namespace IIASA.FotoQuestApi.Database
                 {
                     fileData = await connection.QuerySingleAsync<FileData>(procedure, values, commandType: dataRequest.CommandType);
                 }
-                catch (System.InvalidOperationException ex)
+                catch (System.InvalidOperationException)
                 {
                     connection.Close();
                     throw new NotFoundException($"Image not found for provided Id : {fileId}");

@@ -5,6 +5,4 @@
         public const string FilePersistance = "FilePersistance";
         public string FolderName { get; set; }
     }
-
-   
 }

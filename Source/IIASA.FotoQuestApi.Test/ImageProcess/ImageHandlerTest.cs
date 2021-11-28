@@ -11,6 +11,15 @@ namespace IIASA.FotoQuestApi.Test.ImageProcess
     public class ImageHandlerTest
     {
         private ImageHandler imageHandler;
+        private string fileId = string.Empty;
+        private string jpegFilePath = string.Empty;
+
+        [SetUp]
+        public void Setup()
+        {
+            fileId = Common.fileId;
+            jpegFilePath = Common.jpegFilePath;
+        }
 
         [Test]
         public void GetEnhanceImage()
@@ -23,20 +32,12 @@ namespace IIASA.FotoQuestApi.Test.ImageProcess
                 Sharpness = 1.2f
             };
             imageHandler = new ImageHandler(imageConfigration);
-            var filePath = Path.GetFullPath(@"./TestImages/JpgTestImage.jpg");
-            var originalImage = GetJpegTestFile(filePath);
+            var originalImage = Common.GetJpegTestFile(jpegFilePath);
             //act
             var enhancedImage = imageHandler.EnhanceImage(originalImage);
             //assert
             Assert.IsNotNull(enhancedImage);
         }
 
-        private Image GetJpegTestFile(string filePath)
-        {
-            using (var inputStream = File.OpenRead(filePath))
-            {
-                return Image.Load(inputStream, new Formats.Jpeg.JpegDecoder());
-            }
-        }
     }
 }

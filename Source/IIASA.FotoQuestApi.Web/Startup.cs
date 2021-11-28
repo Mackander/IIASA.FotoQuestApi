@@ -22,7 +22,6 @@ namespace IIASA.FotoQuestApi.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(option => { option.Filters.Add(typeof(ExceptionHandlerFilter)); });
@@ -32,7 +31,7 @@ namespace IIASA.FotoQuestApi.Web
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "FotoQuest - WebApi",
+                    Title = "IIASA.FotoQuestApi",
                 });
             });
             services.AddHttpContextAccessor();
@@ -43,7 +42,6 @@ namespace IIASA.FotoQuestApi.Web
                     .AddDatabaseHealthOptions<DbHealthCheckConfigureOptions>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -53,7 +51,7 @@ namespace IIASA.FotoQuestApi.Web
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestApi.WebApi.xml");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "IIASA.FotoQuestApi.xml");
             });
             app.UseRouting();
 

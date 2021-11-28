@@ -35,7 +35,7 @@ namespace IIASA.FotoQuestApi.Test.FileSystem
             var size = new Size(1000, 1000);
             var fileData = GetFileData();
 
-            Image img = GetJpegTestFile(fileData.FilePath);
+            Image img = Common.GetJpegTestFile(fileData.FilePath);
             imageHandler.SetReturnsDefault(img);
             filePersistanceProvider = new FilePersistanceProvider(fileData.FilePath, filePersistanceConfigration.Object, imageHandler.Object);
 
@@ -65,20 +65,12 @@ namespace IIASA.FotoQuestApi.Test.FileSystem
             Assert.That(ex.Message, Is.EqualTo($"Image not found for provided Id : {fileData.Id}"));
         }
 
-        private Image GetJpegTestFile(string filePath)
-        {
-            using (var inputStream = File.OpenRead(filePath))
-            {
-                return Image.Load(inputStream, new Formats.Jpeg.JpegDecoder());
-            }
-        }
-
         private FileData GetFileData()
         {
             return new FileData
             {
-                FilePath = Path.GetFullPath(@"./TestImages/JpgTestImage.jpg"),
-                FileName = "JpgTestImage.jpg"
+                FilePath = Common.jpegFilePath,
+                FileName = Path.GetFileName(Common.jpegFilePath),
             };
         }
     }
