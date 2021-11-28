@@ -42,14 +42,17 @@ namespace IIASA.FotoQuestApi.Database
                 var fileId = (dataRequest as GetImageDataRequest).Id;
                 var procedure = dataRequest.Command;
                 var values = new { arg_Id = fileId };
-                var fileData = await connection.QuerySingleAsync<FileData>(procedure, values, commandType: dataRequest.CommandType);
-                connection.Close();
-
-                if (fileData == null)
+                FileData fileData = null;
+                try
                 {
+                    fileData = await connection.QuerySingleAsync<FileData>(procedure, values, commandType: dataRequest.CommandType);
+                }
+                catch (System.InvalidOperationException ex)
+                {
+                    connection.Close();
                     throw new NotFoundException($"Image not found for provided Id : {fileId}");
                 }
-
+                connection.Close();
                 return fileData;
             }
         }
