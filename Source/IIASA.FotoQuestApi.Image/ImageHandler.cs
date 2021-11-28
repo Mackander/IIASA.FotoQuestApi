@@ -24,7 +24,8 @@ namespace IIASA.FotoQuestApi.ImageProcess
             var baseImage = new BaseImage(image);
             var contrastImage = new ContrastImage(baseImage, imageConfigration.Contrast);
             var brightenImage = new BrightenImage(contrastImage, imageConfigration.Brightness);
-            return brightenImage.GetImage();
+            var sharpendImage = new SharpenImage(brightenImage, imageConfigration.Sharpness);
+            return sharpendImage.GetImage();
         }
     }
 }

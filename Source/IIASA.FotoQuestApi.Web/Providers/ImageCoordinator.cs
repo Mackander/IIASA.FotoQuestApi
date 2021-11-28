@@ -37,11 +37,24 @@ namespace IIASA.FotoQuestApi.Web
             return await filePersistanceProvider.GetFileAsync(fileData, new Size(imageSize, imageSize));
         }
 
+        public async Task<FilePersistanceSuccessResponse> PersistImage(FileUpload fileUpload)
+        {
+            ValidateFilePersistRequest(fileUpload);
+
+            var fileData = await filePersistanceProvider.SaveFile(fileUpload);
+            await dbPersistanceProvider.SaveImageData(fileData);
+            return new FilePersistanceSuccessResponse
+            {
+                Id = fileData.Id
+            };
+
+        }
+
         private void ValidateFileRequest(string fileId, int imageSize)
         {
             if (string.IsNullOrEmpty(fileId?.Trim()))
             {
-                throw new BadRequestException($"fileId not provided");
+                throw new BadRequestException($"FileId not provided");
             }
             if (imageSize <= imageConfigration.MinAllowedSize || imageSize >= imageConfigration.MaxAllowedSize)
             {
@@ -49,18 +62,6 @@ namespace IIASA.FotoQuestApi.Web
             }
         }
 
-        public async Task<FilePersistanceSuccessResponse> PersistImage(FileUpload fileUpload)
-        {
-            ValidateFilePersistRequest(fileUpload);
-
-            var fileData = await filePersistanceProvider.SaveFile(fileUpload);
-            dbPersistanceProvider.SaveImageData(fileData);
-            return new FilePersistanceSuccessResponse
-            {
-                Id = fileData.Id
-            };
-            
-        }
         private void ValidateFilePersistRequest(FileUpload fileUpload)
         {
             if (fileUpload.UploadedFile == null)

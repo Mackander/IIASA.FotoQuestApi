@@ -17,9 +17,13 @@
   <ItemGroup>
     <ProjectReference Include="..\IIASA.FotoQuestApi.Database\IIASA.FotoQuestApi.Database.csproj" />
     <ProjectReference Include="..\IIASA.FotoQuestApi.FileSystem\IIASA.FotoQuestApi.FileSystem.csproj" />
+    <ProjectReference Include="..\IIASA.FotoQuestApi.Web\IIASA.FotoQuestApi.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestImages\639de010-5a33-408f-b549-33711eb15dd0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestImages\JpgTestImage.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
