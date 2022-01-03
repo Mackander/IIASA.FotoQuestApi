@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace IIASA.FotoQuestApi.Model.Exceptions;
 
-namespace IIASA.FotoQuestApi.Model.Exceptions
+public class NotFoundException : Exception
 {
-    public class NotFoundException : Exception
-    {
-        public NotFoundException(string message) : base(message) { }
-    }
+    public NotFoundException(string message) : base(message) { }
 }

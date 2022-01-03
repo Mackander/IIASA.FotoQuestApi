@@ -1,8 +1,7 @@
-﻿namespace IIASA.FotoQuestApi.Configuration
+﻿namespace IIASA.FotoQuestApi.Configuration;
+
+public class FilePersistanceConfigration
 {
-    public class FilePersistanceConfigration
-    {
-        public const string FilePersistance = "FilePersistance";
-        public string FolderName { get; set; }
-    }
+    public const string FilePersistance = "FilePersistance";
+    public string FolderName { get; set; }
 }

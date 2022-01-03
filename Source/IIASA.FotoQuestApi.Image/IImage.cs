@@ -1,9 +1,7 @@
 ﻿using SixLabors.ImageSharp;
 
-namespace IIASA.FotoQuestApi.ImageProcess
+namespace IIASA.FotoQuestApi.ImageProcess;
+public interface IImage
 {
-    public interface IImage
-    {
-        public Image GetImage();
-    }
+    public Image GetImage();
 }

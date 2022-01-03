@@ -1,13 +1,10 @@
 ﻿using IIASA.FotoQuestApi.Model;
-using System.Threading.Tasks;
 
-namespace IIASA.FotoQuestApi.Database
+namespace IIASA.FotoQuestApi.Database;
+
+public interface IDatabaseProvider
 {
-
-    public interface IDatabaseProvider
-    {
-        public Task<int> SaveImageData(IDataRequest data);
-        Task<FileData> LoadImageData(IDataRequest dataRequest);
-        public Task<bool> CheckConnection();
-    }
+    public Task<int> SaveImageData(IDataRequest data);
+    Task<FileData> LoadImageData(IDataRequest dataRequest);
+    public Task<bool> CheckConnection();
 }

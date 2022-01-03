@@ -1,7 +1,6 @@
-﻿namespace IIASA.FotoQuestApi.Model
+﻿namespace IIASA.FotoQuestApi.Model;
+
+public class FilePersistanceSuccessResponse
 {
-    public class FilePersistanceSuccessResponse
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

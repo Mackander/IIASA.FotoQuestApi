@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IIASA.FotoQuestApi.ImagePro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IIASA.FotoQuestApi.FileSystem", "IIASA.FotoQuestApi.FileSystem\IIASA.FotoQuestApi.FileSystem.csproj", "{BB05A180-0670-4035-8B0D-589039B18F52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IIASA.FotoQuestApi.Test", "IIASA.FotoQuestApi.Test\IIASA.FotoQuestApi.Test.csproj", "{571452FA-CFC5-44A7-8439-E3B1B76E0E63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IIASA.FotoQuestApi.Test", "IIASA.FotoQuestApi.Test\IIASA.FotoQuestApi.Test.csproj", "{571452FA-CFC5-44A7-8439-E3B1B76E0E63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IIASA.FotoQuestApi.Common", "IIASA.FotoQuestApi.Common\IIASA.FotoQuestApi.Common.csproj", "{251A4C31-EB2B-492D-BC5E-432FB7B77617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{571452FA-CFC5-44A7-8439-E3B1B76E0E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{571452FA-CFC5-44A7-8439-E3B1B76E0E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{571452FA-CFC5-44A7-8439-E3B1B76E0E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{251A4C31-EB2B-492D-BC5E-432FB7B77617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{251A4C31-EB2B-492D-BC5E-432FB7B77617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{251A4C31-EB2B-492D-BC5E-432FB7B77617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{251A4C31-EB2B-492D-BC5E-432FB7B77617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

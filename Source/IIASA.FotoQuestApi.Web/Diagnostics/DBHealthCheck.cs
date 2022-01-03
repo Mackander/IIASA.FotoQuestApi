@@ -1,22 +1,18 @@
-﻿using IIASA.FotoQuestApi.Database;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace IIASA.FotoQuestApi.Web.Diagnostics
+namespace IIASA.FotoQuestApi.Web.Diagnostics;
+
+public class DBHealthCheck : IHealthCheck
 {
-    public class DBHealthCheck : IHealthCheck
+    private readonly IDatabaseProvider databaseProvider;
+
+    public DBHealthCheck(IDatabaseProvider databaseProvider)
     {
-        private readonly IDatabaseProvider databaseProvider;
+        this.databaseProvider = databaseProvider;
+    }
 
-        public DBHealthCheck(IDatabaseProvider databaseProvider)
-        {
-            this.databaseProvider = databaseProvider;
-        }
-
-        public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
-        {
-            return await databaseProvider.CheckConnection() ? HealthCheckResult.Healthy("Database is Healthy") : HealthCheckResult.Unhealthy("Database is UnHealthy");
-        }
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        return await databaseProvider.CheckConnection() ? HealthCheckResult.Healthy("Database is Healthy") : HealthCheckResult.Unhealthy("Database is UnHealthy");
     }
 }

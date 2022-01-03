@@ -1,24 +1,22 @@
 ﻿using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 
-namespace IIASA.FotoQuestApi.ImageProcess
+namespace IIASA.FotoQuestApi.ImageProcess;
+public class ContrastImage : ImageDecorator
 {
-    public class ContrastImage : ImageDecorator
+    private readonly float contrastValue;
+
+    public ContrastImage(IImage image, float contrastValue = 1.1f) : base(image)
+        => this.contrastValue = contrastValue;
+
+    public override Image GetImage()
+        => EnhanceImage();
+
+
+    private Image EnhanceImage()
     {
-        private readonly float contrastValue;
-
-        public ContrastImage(IImage image, float contrastValue = 1.1f) : base(image)
-            => this.contrastValue = contrastValue;
-
-        public override Image GetImage()
-            => EnhanceImage();
-
-
-        private Image EnhanceImage()
-        {
-            Image image = base.GetImage();
-            image.Mutate(i => i.Contrast(contrastValue));
-            return image;
-        }
+        Image image = base.GetImage();
+        image.Mutate(i => i.Contrast(contrastValue));
+        return image;
     }
 }

@@ -1,18 +1,16 @@
 ﻿using SixLabors.ImageSharp;
 
-namespace IIASA.FotoQuestApi.ImageProcess
+namespace IIASA.FotoQuestApi.ImageProcess;
+public abstract class ImageDecorator : IImage
 {
-    public abstract class ImageDecorator : IImage
+    private readonly IImage image;
+
+    public ImageDecorator(IImage image)
+        => this.image = image;
+
+
+    public virtual Image GetImage()
     {
-        private readonly IImage image;
-
-        public ImageDecorator(IImage image)
-            => this.image = image;
-
-
-        public virtual Image GetImage()
-        {
-            return this.image.GetImage();
-        }
+        return this.image.GetImage();
     }
 }

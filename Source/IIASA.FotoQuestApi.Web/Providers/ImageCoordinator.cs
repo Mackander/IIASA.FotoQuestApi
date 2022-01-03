@@ -1,79 +1,68 @@
-﻿using IIASA.FotoQuestApi.Configuration;
-using IIASA.FotoQuestApi.Database;
-using IIASA.FotoQuestApi.FileSystem;
-using IIASA.FotoQuestApi.Model;
-using IIASA.FotoQuestApi.Model.Exceptions;
-using IIASA.FotoQuestApi.Web.Models;
-using SixLabors.ImageSharp;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SixLabors.ImageSharp;
 
-namespace IIASA.FotoQuestApi.Web
+namespace IIASA.FotoQuestApi.Web;
+
+public class ImageCoordinator : IImageCoordinator
 {
-    public class ImageCoordinator : IImageCoordinator
+    private readonly IDbPersistanceProvider dbPersistanceProvider;
+    private readonly IFilePersistanceProvider filePersistanceProvider;
+    private readonly ImageConfigration imageConfigration;
+
+    public ImageCoordinator(IDbPersistanceProvider dbPersistanceProvider,
+                            IFilePersistanceProvider filePersistanceProvider,
+                            ImageConfigration imageConfigration)
     {
-        private readonly IDbPersistanceProvider dbPersistanceProvider;
-        private readonly IFilePersistanceProvider filePersistanceProvider;
-        private readonly ImageConfigration imageConfigration;
+        this.dbPersistanceProvider = dbPersistanceProvider;
+        this.filePersistanceProvider = filePersistanceProvider;
+        this.imageConfigration = imageConfigration;
+    }
 
-        public ImageCoordinator(IDbPersistanceProvider dbPersistanceProvider,
-                                IFilePersistanceProvider filePersistanceProvider,
-                                ImageConfigration imageConfigration)
+    public async Task<byte[]> GetImage(string fileId, int imageSize)
+    {
+        ValidateFileRequest(fileId, imageSize);
+
+        var fileIdTrim = fileId.Trim();
+        var fileData = await dbPersistanceProvider.LoadImageData(fileIdTrim);
+        fileData.Id = fileIdTrim;
+        return await filePersistanceProvider.GetFileAsync(fileData, new Size(imageSize, imageSize));
+    }
+
+    public async Task<FilePersistanceSuccessResponse> PersistImage(FileUpload fileUpload)
+    {
+        ValidateFilePersistRequest(fileUpload);
+
+        var fileData = await filePersistanceProvider.SaveFile(fileUpload);
+        await dbPersistanceProvider.SaveImageData(fileData);
+        return new FilePersistanceSuccessResponse
         {
-            this.dbPersistanceProvider = dbPersistanceProvider;
-            this.filePersistanceProvider = filePersistanceProvider;
-            this.imageConfigration = imageConfigration;
+            Id = fileData.Id
+        };
+
+    }
+
+    private void ValidateFileRequest(string fileId, int imageSize)
+    {
+        if (string.IsNullOrEmpty(fileId?.Trim()))
+        {
+            throw new BadRequestException($"FileId not provided");
+        }
+        if (imageSize <= imageConfigration.MinAllowedSize || imageSize >= imageConfigration.MaxAllowedSize)
+        {
+            throw new BadRequestException($"Provided Image Size '{imageSize}' should be in Range of {imageConfigration.MinAllowedSize} to {imageConfigration.MaxAllowedSize}");
+        }
+    }
+
+    private void ValidateFilePersistRequest(FileUpload fileUpload)
+    {
+        if (fileUpload.UploadedFile == null)
+        {
+            throw new BadRequestException("File not provided");
         }
 
-        public async Task<byte[]> GetImage(string fileId, int imageSize)
+        string ext = Path.GetExtension(fileUpload.UploadedFile.FileName)[1..];
+        if (!imageConfigration.ValidImageExtensions.Contains<string>(ext, StringComparer.OrdinalIgnoreCase))
         {
-            ValidateFileRequest(fileId, imageSize);
-
-            var fileIdTrim = fileId.Trim();
-            var fileData = await dbPersistanceProvider.LoadImageData(fileIdTrim);
-            fileData.Id = fileIdTrim;
-            return await filePersistanceProvider.GetFileAsync(fileData, new Size(imageSize, imageSize));
-        }
-
-        public async Task<FilePersistanceSuccessResponse> PersistImage(FileUpload fileUpload)
-        {
-            ValidateFilePersistRequest(fileUpload);
-
-            var fileData = await filePersistanceProvider.SaveFile(fileUpload);
-            await dbPersistanceProvider.SaveImageData(fileData);
-            return new FilePersistanceSuccessResponse
-            {
-                Id = fileData.Id
-            };
-
-        }
-
-        private void ValidateFileRequest(string fileId, int imageSize)
-        {
-            if (string.IsNullOrEmpty(fileId?.Trim()))
-            {
-                throw new BadRequestException($"FileId not provided");
-            }
-            if (imageSize <= imageConfigration.MinAllowedSize || imageSize >= imageConfigration.MaxAllowedSize)
-            {
-                throw new BadRequestException($"Provided Image Size '{imageSize}' should be in Range of {imageConfigration.MinAllowedSize} to {imageConfigration.MaxAllowedSize}");
-            }
-        }
-
-        private void ValidateFilePersistRequest(FileUpload fileUpload)
-        {
-            if (fileUpload.UploadedFile == null)
-            {
-                throw new BadRequestException("File not provided");
-            }
-
-            string ext = Path.GetExtension(fileUpload.UploadedFile.FileName)[1..];
-            if (!imageConfigration.ValidImageExtensions.Contains<string>(ext, StringComparer.OrdinalIgnoreCase))
-            {
-                throw new BadRequestException($"Allowed file extensions are : {string.Join(", ", imageConfigration.ValidImageExtensions)}");
-            }
+            throw new BadRequestException($"Allowed file extensions are : {string.Join(", ", imageConfigration.ValidImageExtensions)}");
         }
     }
 }
