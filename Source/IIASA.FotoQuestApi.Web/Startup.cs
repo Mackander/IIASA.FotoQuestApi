@@ -52,6 +52,8 @@ public class Startup
 
         app.UseAuthorization();
 
+        app.UseCustomRequestLogging();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

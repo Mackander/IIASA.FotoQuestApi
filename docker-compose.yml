@@ -1,6 +1,6 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
 
-version: '3.4'
+version: '3.8'
 
 #create a volume for the my sql container.To ensure Data persists after my sql container is stopped
 volumes:
@@ -27,6 +27,7 @@ services:
       MYSQL_DATABASE: fotoquest_db
   #Api  Service
   api:
+    container_name: iiasafotoquestapi
     build:
       context: .
       #Use the DockerFile in that Directory

@@ -5,3 +5,5 @@ global using IIASA.FotoQuestApi.Model;
 global using IIASA.FotoQuestApi.Model.Exceptions;
 global using IIASA.FotoQuestApi.Web.Models;
 global using IIASA.FotoQuestApi.ImageProcess;
+global using Serilog;
+global using Serilog.Events;
