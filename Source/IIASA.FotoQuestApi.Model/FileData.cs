@@ -1,14 +1,14 @@
 ﻿namespace IIASA.FotoQuestApi.Model;
-public class FileData
+public record FileData
 {
-    public string Id { get; set; }
-    public string OriginalName { get; set; }
-    public DateTime DateOfUpload { get; set; }
-    public float HorizontalResolution { get; set; }
-    public float VerticalResolution { get; set; }
-    public int Height { get; set; }
-    public int Width { get; set; }
-    public string FilePath { get; set; }
-    public string FileName { get; set; }
+    public string Id { get; init; }
+    public string OriginalName { get; init; }
+    public DateTime DateOfUpload { get; init; }
+    public float HorizontalResolution { get; init; }
+    public float VerticalResolution { get; init; }
+    public int Height { get; init; }
+    public int Width { get; init; }
+    public string FilePath { get; init; }
+    public string FileName { get; init; }
 
 }

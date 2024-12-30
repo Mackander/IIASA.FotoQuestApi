@@ -70,15 +70,14 @@ public class FilePersistanceProvider : IFilePersistanceProvider
             }
             stream.Flush();
         }
-        var fileMetaData = GetFileMetaData(filePath);
-
-        fileMetaData.Id = id;
-        fileMetaData.OriginalName = fileUpload.UploadedFile.FileName;
-        fileMetaData.DateOfUpload = System.DateTime.Now;
-        fileMetaData.FilePath = filePath;
-        fileMetaData.FileName = newFileName;
-        return fileMetaData;
-
+        return GetFileMetaData(filePath) with
+        {
+            Id = id,
+            OriginalName = fileUpload.UploadedFile.FileName,
+            DateOfUpload = System.DateTime.Now,
+            FilePath = filePath,
+            FileName = newFileName
+        };
     }
 
     private FileData GetFileMetaData(string filePath)
@@ -94,42 +93,27 @@ public class FilePersistanceProvider : IFilePersistanceProvider
     }
 
     private Formats.IImageDecoder GetImageDecoder(string fileExtension)
-    {
-        switch (fileExtension.ToLower())
+        => fileExtension.ToLower() switch
         {
-            case "png":
-                return new Formats.Png.PngDecoder();
-            case "jpeg":
-            case "jpg":
-                return new Formats.Jpeg.JpegDecoder();
-            case "bmp":
-                return new Formats.Bmp.BmpDecoder();
-            case "gif":
-                return new Formats.Gif.GifDecoder();
-            case "tga":
-                return new Formats.Tga.TgaDecoder();
-            default:
-                throw new System.Exception($"Decoder not defined for extension : {fileExtension}");
-        }
-    }
+            "png" => new Formats.Png.PngDecoder(),
+            "jpeg" or "jpg" => new Formats.Jpeg.JpegDecoder(),
+            "bmp" => new Formats.Bmp.BmpDecoder(),
+            "gif" => new Formats.Gif.GifDecoder(),
+            "tga" => new Formats.Tga.TgaDecoder(),
+            _ => throw new System.Exception($"Decoder not defined for extension : {fileExtension}"),
+        };
+
 
     private Formats.IImageEncoder GetImageEncoder(string fileExtension)
-    {
-        switch (fileExtension.ToLower())
+    =>
+        fileExtension.ToLower() switch
         {
-            case "png":
-                return new Formats.Png.PngEncoder();
-            case "jpeg":
-            case "jpg":
-                return new Formats.Jpeg.JpegEncoder();
-            case "bmp":
-                return new Formats.Bmp.BmpEncoder();
-            case "gif":
-                return new Formats.Gif.GifEncoder();
-            case "tga":
-                return new Formats.Tga.TgaEncoder();
-            default:
-                throw new System.Exception($"Encoder not defined for extension : {fileExtension}");
-        }
-    }
+            "png" => new Formats.Png.PngEncoder(),
+            "jpeg" or "jpg" => new Formats.Jpeg.JpegEncoder(),
+            "bmp" => new Formats.Bmp.BmpEncoder(),
+            "gif" => new Formats.Gif.GifEncoder(),
+            "tga" => new Formats.Tga.TgaEncoder(),
+            _ => throw new System.Exception($"Encoder not defined for extension : {fileExtension}"),
+        };
+
 }

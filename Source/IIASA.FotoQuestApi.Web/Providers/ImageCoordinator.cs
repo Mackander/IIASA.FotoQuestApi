@@ -22,8 +22,7 @@ public class ImageCoordinator : IImageCoordinator
         ValidateFileRequest(fileId, imageSize);
 
         var fileIdTrim = fileId.Trim();
-        var fileData = await dbPersistanceProvider.LoadImageData(fileIdTrim);
-        fileData.Id = fileIdTrim;
+        var fileData = await dbPersistanceProvider.LoadImageData(fileIdTrim) with { Id = fileIdTrim };
         return await filePersistanceProvider.GetFileAsync(fileData, new Size(imageSize, imageSize));
     }
 

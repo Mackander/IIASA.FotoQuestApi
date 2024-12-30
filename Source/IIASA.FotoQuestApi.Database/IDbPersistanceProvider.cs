@@ -12,13 +12,10 @@ public class DbPersistanceProvider : IDbPersistanceProvider
     private readonly IDatabaseProvider databaseProvider;
 
     public DbPersistanceProvider(IDatabaseProvider databaseProvider)
-    {
-        this.databaseProvider = databaseProvider;
-    }
+        => this.databaseProvider = databaseProvider;
+
     public async Task<FileData> LoadImageData(string fileId)
-    {
-        return await databaseProvider.LoadImageData(new GetImageDataRequest { Id = fileId });
-    }
+        => await databaseProvider.LoadImageData(new GetImageDataRequest { Id = fileId });
 
     public async Task<int> SaveImageData(FileData data)
     {

@@ -1,6 +1,6 @@
 ﻿namespace IIASA.FotoQuestApi.Model;
-public class FilePersistanceFailedResponse
+public record FilePersistanceFailedResponse
 {
-    public string Message { get; set; }
-    public string Details { get; set; }
+    public string Message { get; init; }
+    public string Details { get; init; }
 }
