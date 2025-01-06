@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FotoQuestApi.Configuration\FotoQuestApi.Configuration.csproj" />
+    <ProjectReference Include="..\FotoQuestApi.Image\FotoQuestApi.ImageProcess.csproj" />
+    <ProjectReference Include="..\FotoQuestApi.Model\FotoQuestApi.Model.csproj" />
+  </ItemGroup>
+
+</Project>
