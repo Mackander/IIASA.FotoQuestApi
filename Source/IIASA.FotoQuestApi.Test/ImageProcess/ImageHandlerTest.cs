@@ -36,7 +36,7 @@ namespace IIASA.FotoQuestApi.Test.ImageProcess
             //act
             var enhancedImage = imageHandler.EnhanceImage(originalImage);
             //assert
-            Assert.IsNotNull(enhancedImage);
+            Assert.That(enhancedImage is not null);
         }
 
     }

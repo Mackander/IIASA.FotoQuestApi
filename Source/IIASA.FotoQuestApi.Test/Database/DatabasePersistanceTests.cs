@@ -35,8 +35,8 @@ namespace IIASA.FotoQuestApi.Test.Database
             var response = await dbPersistanceProvider.LoadImageData(id);
 
             //assert
-            Assert.IsNotNull(response);
-            Assert.IsTrue(response.Id.Equals(id));
+            Assert.That(response is not null);
+            Assert.That(response.Id.Equals(id));
 
 
             FileData GetData()
@@ -58,7 +58,7 @@ namespace IIASA.FotoQuestApi.Test.Database
             var response = await dbPersistanceProvider.SaveImageData(new FileData());
 
             //assert
-            Assert.AreEqual(1, response);
+            Assert.Equals(1, response);
         }
 
         [Test]

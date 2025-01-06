@@ -30,7 +30,7 @@ public class FilePersistanceProvider : IFilePersistanceProvider
             string fileExtension = Path.GetExtension(fileData.FileName)[1..].ToLower();
             using (var inputStream = File.OpenRead(filePath))
             {
-                using (var image = await Image.LoadAsync(inputStream, GetImageDecoder(fileExtension)))
+                using (var image = await Image.LoadAsync(inputStream, default))
                 {
                     Image resizedImage = imageHandler.GetResizedImage(image, size);
                     using (var stream = new MemoryStream())
@@ -64,7 +64,8 @@ public class FilePersistanceProvider : IFilePersistanceProvider
         {
             using (var mst = fileUpload.UploadedFile.OpenReadStream())
             {
-                var img = await Image.LoadAsync(mst, GetImageDecoder(fileExtension[1..]));
+                //var img = await Image.LoadAsync(mst, GetImageDecoder(fileExtension[1..]));
+                var img = await Image.LoadAsync(mst, default);
                 Image enhancedImage = imageHandler.EnhanceImage(img);
                 await enhancedImage.SaveAsync(stream, GetImageEncoder(fileExtension[1..]));
             }
@@ -92,16 +93,16 @@ public class FilePersistanceProvider : IFilePersistanceProvider
         };
     }
 
-    private Formats.IImageDecoder GetImageDecoder(string fileExtension)
-        => fileExtension.ToLower() switch
-        {
-            "png" => new Formats.Png.PngDecoder(),
-            "jpeg" or "jpg" => new Formats.Jpeg.JpegDecoder(),
-            "bmp" => new Formats.Bmp.BmpDecoder(),
-            "gif" => new Formats.Gif.GifDecoder(),
-            "tga" => new Formats.Tga.TgaDecoder(),
-            _ => throw new System.Exception($"Decoder not defined for extension : {fileExtension}"),
-        };
+    //private Formats.IImageDecoder GetImageDecoder(string fileExtension)
+    //    => fileExtension.ToLower() switch
+    //    {
+    //        "png" => new Formats.Png.PngDecoder(),
+    //        "jpeg" or "jpg" => new Formats.Jpeg.JpegDecoder(),
+    //        "bmp" => new Formats.Bmp.BmpDecoder(),
+    //        "gif" => new Formats.Gif.GifDecoder(),
+    //        "tga" => new Formats.Tga.TgaDecoder(),
+    //        _ => throw new System.Exception($"Decoder not defined for extension : {fileExtension}"),
+    //    };
 
 
     private Formats.IImageEncoder GetImageEncoder(string fileExtension)

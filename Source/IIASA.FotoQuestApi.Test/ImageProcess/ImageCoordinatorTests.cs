@@ -50,7 +50,7 @@ namespace IIASA.FotoQuestApi.Test.ImageProcess
             //act
             var response = await imageCoordinator.GetImage(fileId, small);
             //assert
-            Assert.IsTrue(response.Length > 0);
+            Assert.That(response.Length > 0);
         }
 
         [Test]
@@ -144,8 +144,8 @@ namespace IIASA.FotoQuestApi.Test.ImageProcess
             var response = await imageCoordinator.PersistImage(fileUpload);
 
             //Assert
-            Assert.IsInstanceOf<FilePersistanceSuccessResponse>(response);
-            Assert.AreEqual(fileId, response.Id);
+            //Assert.That(response, Is.InstanceOf(FilePersistanceSuccessResponse));
+            Assert.Equals(fileId, response.Id);
 
         }
 

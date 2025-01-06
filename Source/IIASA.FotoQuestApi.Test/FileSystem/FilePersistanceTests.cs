@@ -43,7 +43,7 @@ namespace IIASA.FotoQuestApi.Test.FileSystem
             var response = await filePersistanceProvider.GetFileAsync(fileData, size);
 
             //assert
-            Assert.IsNotNull(response);
+            Assert.That(response is not null);
         }
 
         [Test]

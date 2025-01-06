@@ -14,7 +14,8 @@ namespace IIASA.FotoQuestApi.Test
         {
             using (var inputStream = File.OpenRead(filePath))
             {
-                return Image.Load(inputStream, new Formats.Jpeg.JpegDecoder());
+                //return Image.Load(inputStream, new Formats.Jpeg.JpegDecoder());
+                return Image.Load(inputStream);
             }
         }
 
