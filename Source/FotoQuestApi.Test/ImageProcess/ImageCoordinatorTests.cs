@@ -38,7 +38,11 @@ namespace FotoQuestApi.Test.ImageProcess
         {
             //arrange
             int small = 512;
-            var fileData = new Model.FileData();
+            var fileData = new Model.FileData()
+            {
+                Id = fileId
+            };
+
             var originalImage = Common.GetJpegTestFile(jpegFilePath);
 
             dbPersistanceProvider.Setup(x => x.LoadImageData(fileId)).Returns(Task.Run(() => fileData));
@@ -144,8 +148,7 @@ namespace FotoQuestApi.Test.ImageProcess
             var response = await imageCoordinator.PersistImage(fileUpload);
 
             //Assert
-            //Assert.That(response, Is.InstanceOf(FilePersistanceSuccessResponse));
-            Assert.Equals(fileId, response.Id);
+            Assert.That(fileId, Is.EqualTo(response.Id));
 
         }
 

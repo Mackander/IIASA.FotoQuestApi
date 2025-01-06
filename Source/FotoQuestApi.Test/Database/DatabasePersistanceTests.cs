@@ -58,7 +58,7 @@ namespace FotoQuestApi.Test.Database
             var response = await dbPersistanceProvider.SaveImageData(new FileData());
 
             //assert
-            Assert.Equals(1, response);
+            Assert.That(1, Is.EqualTo(response));
         }
 
         [Test]
