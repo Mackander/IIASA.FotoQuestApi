@@ -1,4 +1,4 @@
-﻿# IIASA.FotoQuestApi
+﻿# FotoQuestApi
 Service API for submitting and retrieving Images
 
 
